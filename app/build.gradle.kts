@@ -68,7 +68,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.49")
     ksp("com.google.dagger:dagger-compiler:2.49")
     ksp("com.google.dagger:hilt-compiler:2.49")
-    implementation("androidx.hilt:hilt-compiler:1.1.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     //retrofit - to get api requests
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
