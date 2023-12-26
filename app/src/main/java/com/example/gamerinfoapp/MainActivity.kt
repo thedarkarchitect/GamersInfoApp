@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.gamerinfoapp.presentation.gameScreen.GameViewModel
-import com.example.gamerinfoapp.presentation.gameScreen.components.HomeScreen
+import com.example.gamerinfoapp.presentation.NavGraph
 import com.example.gamerinfoapp.ui.theme.GamerInfoAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,8 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val viewModel = hiltViewModel<GameViewModel>()
-                        HomeScreen(state = viewModel)
+                        NavGraph()
                 }
             }
         }

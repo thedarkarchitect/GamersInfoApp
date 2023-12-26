@@ -14,7 +14,7 @@ import javax.inject.Inject
 class GameRepositoryImpl @Inject constructor(
     private val api: GamesApi
 ): GameRepository {
-    override suspend fun getGames(): Flow<Resource<List<GameDto>>> =
+    override suspend fun getGames(): Flow<Resource<ArrayList<GameDto>>> =
         flow{
            emit(Resource.Loading())
            try {

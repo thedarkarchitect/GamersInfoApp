@@ -8,6 +8,6 @@ import com.example.gamerinfoapp.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface GameRepository {
-    suspend fun getGames(): Flow<Resource<List<GameDto>>>
+    suspend fun getGames(): Flow<Resource<ArrayList<GameDto>>>
     suspend fun getGamesById(id: Int): Flow<Resource<GameDetailsdto>>
 }

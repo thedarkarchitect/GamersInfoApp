@@ -1,5 +1,7 @@
-package com.example.gamerinfoapp.presentation.gameScreen
+package com.example.gamerinfoapp.presentation.gameDetails
 
+import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gamerinfoapp.domain.repository.GameRepository
@@ -13,40 +15,44 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GameViewModel @Inject constructor(
-    private val repository: GameRepository
+class GameDetailsViewModel @Inject constructor(
+    private val repository: GameRepository,
+    savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
-    private val _gamesState = MutableStateFlow(GameState())
-    val gamesState = _gamesState.asStateFlow()
+    private val gameId = savedStateHandle.get<Int>("gameId")
+
+    private val _gamesDetailState = MutableStateFlow(GameDetailsState())
+    val gamesDetailState = _gamesDetailState.asStateFlow()
 
     init {
-        getGameList()
+        Log.d("gameId", "The id $gameId" )
+        getGameById(gameId ?: -1)
     }
 
-    private fun getGameList() {
+    private fun getGameById(id: Int) {
         viewModelScope.launch {
-            repository.getGames().collectLatest {  result ->
-                when(result) {
+            repository.getGamesById(id).collectLatest { gameDetails ->
+                when(gameDetails) {
                     is Resource.Error -> {
-                        _gamesState.update {
+                        _gamesDetailState.update{
                             it.copy(
                                 isLoading = false
                             )
                         }
                     }
                     is Resource.Loading -> {
-                        _gamesState.update {
+                        _gamesDetailState.update {
                             it.copy(
                                 isLoading = true
                             )
                         }
                     }
                     is Resource.Success -> {
-                        result.data?.let { gameList ->
-                            _gamesState.update {
+                        gameDetails.data.let { gameDetailsdto ->
+                            _gamesDetailState.update {
                                 it.copy(
-                                    gameList = gameList
+                                    gameInfo = gameDetailsdto
                                 )
                             }
                         }
